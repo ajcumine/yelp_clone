@@ -10,7 +10,7 @@ group :development, :test do
 end
 
 # Use postgresql as the database for Active Record
-gem 'pg'
+gem 'sqlite3'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'
