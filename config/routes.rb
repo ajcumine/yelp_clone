@@ -1,4 +1,7 @@
 YelpClone::Application.routes.draw do
+  get "restaurants/index"
+  get "restaurants/create"
+  get "restaurants/new"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
