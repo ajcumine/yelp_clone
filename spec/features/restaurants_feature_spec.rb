@@ -23,7 +23,7 @@ describe 'the restaurant index page' do
 
   context 'with existing restaurants' do
     before(:each) do
-      Restaurant.create({name: 'Eat Tokyo'})
+      Restaurant.create({name: 'Eat Tokyo', location: 'notting hill'})
     end
 
     describe 'editing a restaurant' do

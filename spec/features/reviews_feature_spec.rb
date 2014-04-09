@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'writing reviews'  do
   
   before(:each) do
-    Restaurant.create(name: 'Yo Sushi')
+    Restaurant.create(name: 'Yo Sushi', location: 'selfridges')
   end
 
   it 'should change the average score of the restaurant' do
