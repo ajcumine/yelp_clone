@@ -4,8 +4,12 @@ class RestaurantsController < ApplicationController
   end
 
   def create
-    Restaurant.create(restaurant_params)
-    redirect_to '/restaurants'
+    @restaurant = Restaurant.new(restaurant_params)
+    if @restaurant.save
+      redirect_to '/restaurants'
+    else
+      render 'new'
+    end
   end
 
   def new
@@ -28,6 +32,10 @@ class RestaurantsController < ApplicationController
     @restaurant.destroy
     flash[:notice] = 'Restaurant successfully deleted!'
     redirect_to '/restaurants'
+  end
+
+  def show
+    @restaurant = Restaurant.find(params[:id])
   end
 
   private

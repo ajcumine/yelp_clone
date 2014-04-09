@@ -18,13 +18,19 @@ describe 'the restaurant index page' do
         expect(current_path).to eq('/restaurants')
         expect(page).to have_content('mcdonuts')
       end
+
+      it 'should display errors if bad data is given' do
+        visit '/restaurants'
+        click_link 'Add a restaurant'
+        fill_in 'Name', with: 'some shop'
+        click_button 'Create Restaurant'
+        expect(page).to have_content('error')
+      end
     end
   end
 
   context 'with existing restaurants' do
-    before(:each) do
-      Restaurant.create({name: 'Eat Tokyo', location: 'notting hill'})
-    end
+    let!(:restaurant){Restaurant.create({name: 'Eat Tokyo', location: 'notting hill'})}
 
     describe 'editing a restaurant' do
       it 'should update the restaurant details' do
@@ -42,6 +48,20 @@ describe 'the restaurant index page' do
         click_link 'Delete Eat Tokyo'
         expect(page).not_to have_content('Eat Tokyo')
         expect(page).to have_content('Restaurant successfully deleted!')
+      end
+    end
+
+    context 'with reviews posted' do
+      before(:each) do
+        restaurant.reviews.create(rating: 3, comment: 'alright')
+      end
+
+      describe 'the individual restaurant page' do
+        it 'displays the review' do
+          visit '/restaurants'
+          click_link 'Eat Tokyo'
+          expect(page).to have_content('alright')
+        end
       end
     end
   end
