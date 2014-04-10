@@ -10,8 +10,8 @@ describe 'writing reviews'  do
     visit '/restaurants'
     click_link 'Review Yo Sushi'
     fill_in 'Comment', with: 'omnomnom'
-    select '5', from: 'Rating'
+    select '4', from: 'Rating'
     click_button 'Create Review'
-    expect(page).to have_css '.average_review', text: '5'
+    expect(page).to have_css '.average_review', text: '★★★★☆'
   end
 end

@@ -8,23 +8,39 @@ describe 'the restaurant index page' do
     end
 
     describe 'adding a restaurant' do
-      it 'should be listed on the index' do
-        visit '/restaurants'
-        click_link 'Add a restaurant'
-        fill_in 'Name', with: 'mcdonuts'
-        fill_in 'Category', with: 'donuts'
-        fill_in 'Location', with: 'everywhere'
-        click_button 'Create Restaurant'
-        expect(current_path).to eq('/restaurants')
-        expect(page).to have_content('mcdonuts')
+
+      context 'logged out' do
+        it 'takes me to the log in page' do
+          visit '/restaurants'
+          click_link 'Add a restaurant'
+          expect(current_path).to eq('/users/sign_in')
+          expect(page).to have_content('sign in')
+        end
       end
 
-      it 'should display errors if bad data is given' do
-        visit '/restaurants'
-        click_link 'Add a restaurant'
-        fill_in 'Name', with: 'some shop'
-        click_button 'Create Restaurant'
-        expect(page).to have_content('error')
+      context 'logged in' do
+        before(:each) do
+          login_as_test_user
+        end
+
+        it 'should be listed on the index' do
+          visit '/restaurants'
+          click_link 'Add a restaurant'
+          fill_in 'Name', with: 'mcdonuts'
+          fill_in 'Category', with: 'donuts'
+          fill_in 'Location', with: 'everywhere'
+          click_button 'Create Restaurant'
+          expect(current_path).to eq('/restaurants')
+          expect(page).to have_content('mcdonuts')
+        end
+  
+        it 'should display errors if bad data is given' do
+          visit '/restaurants'
+          click_link 'Add a restaurant'
+          fill_in 'Name', with: 'some shop'
+          click_button 'Create Restaurant'
+          expect(page).to have_content('error')
+        end
       end
     end
   end
